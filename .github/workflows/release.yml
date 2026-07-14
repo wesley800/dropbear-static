@@ -123,7 +123,6 @@ jobs:
       - name: Create / Update Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: softprops/action-gh-release@v3
         run: |
           gh release create ${{ github.ref_name }} \
             --title "Release ${{ github.ref_name }}" \
