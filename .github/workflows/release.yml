@@ -121,14 +121,14 @@ jobs:
         run: ls -lR dist
 
       - name: Create / Update Release
-        uses: softprops/action-gh-release@v3
-        with:
-          tag_name: ${{ github.ref_name }}
-          name: ${{ github.ref_name }}
-          files: |
-            dist/**/dropbear-*.tar.xz
-            dist/**/dropbear-*.tar.xz.SHA256
-            dist/**/sftp-server-*.tar.xz
-            dist/**/sftp-server-*.tar.xz.SHA256
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v3
+        run: |
+          gh release create ${{ github.ref_name }} \
+            --title "Release ${{ github.ref_name }}" \
+            --generate-notes \
+            dist/**/dropbear-*.tar.xz \
+            dist/**/dropbear-*.tar.xz.SHA256 \
+            dist/**/sftp-server-*.tar.xz \
+            dist/**/sftp-server-*.tar.xz.SHA256
