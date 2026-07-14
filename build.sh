@@ -2,8 +2,8 @@
 set -ev
 
 # ---- Config ----------------------------------------------------------------
-: "${DROPBEAR_VERSION:=2025.88}"   # Dropbear release to build
-: "${ZIG_VERSION:=0.15.1}"         # Zig to use for musl cross static
+: "${DROPBEAR_VERSION:=2026.92}"   # Dropbear release to build
+: "${ZIG_VERSION:=0.16.0}"         # Zig to use for musl cross static
 : "${JOBS:=8}"                     # parallel make
 
 # TARGET may be provided by CI matrix (e.g., x86_64-linux-musl, aarch64-linux-musl
@@ -24,7 +24,7 @@ zig_pkg="zig-${zig_pkg_arch}-linux-${ZIG_VERSION}.tar.xz"
 zig_url="https://ziglang.org/download/${ZIG_VERSION}/${zig_pkg}"
 
 echo "Downloading Zig ${ZIG_VERSION} for ${zig_pkg_arch}..."
-curl -fsSL "$zig_url" -o "${builddir}/${zig_pkg}"
+curl -vL "$zig_url" -o "${builddir}/${zig_pkg}"
 echo "Extracting Zig to $builddir..."
 tar -C "$builddir" -xJf "${builddir}/${zig_pkg}"
 echo "Extracted zig"
@@ -40,7 +40,7 @@ dropbear_tar="dropbear-${DROPBEAR_VERSION}.tar.bz2"
 dropbear_url="https://matt.ucc.asn.au/dropbear/releases/${dropbear_tar}"
 
 echo "Downloading Dropbear ${DROPBEAR_VERSION}..."
-curl -fsSL "$dropbear_url" -o "${builddir}/${dropbear_tar}"
+curl -vL "$dropbear_url" -o "${builddir}/${dropbear_tar}"
 echo "Extracting Dropbear..."
 tar -C "$builddir" -xjf "${builddir}/${dropbear_tar}"
 cd "${builddir}/dropbear-${DROPBEAR_VERSION}"
